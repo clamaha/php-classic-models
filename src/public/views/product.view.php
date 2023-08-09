@@ -1,3 +1,4 @@
+
 <h2> <?= $product['productName'] ?> </h2>
 
 <p> <?= $product['productDescription'] ?></p>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <title>Workshop Classic Models</title>
+    <style>nav{padding: 0 75px;}</style>
 </head>
 <body>
     <header>
@@ -20,4 +21,4 @@
             </ul>
         </nav>
     </header>
-    <main>
+    <main class="container">
