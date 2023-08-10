@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
     <title>Workshop Classic Models</title>
-    <style>nav{padding: 0 75px;}</style>
 </head>
 <body>
     <header>
@@ -14,11 +15,14 @@
                 <li><a href="/"><strong>Classic Models</strong></a></li>
             </ul>
             <ul>
-                Hi <?= $_SESSION['user']['username'] ?>!
-            <li><a href="/register.php"><strong><button>Register</button></strong></a></li>
-            <li><a href="/login.php"><strong>Login</strong></a></li>
-            <li><a href="/logout.php"><strong>Logout</strong></a></li>
+                <?php if (!empty($_SESSION['user'])): ?>
+                    Hello <?= $_SESSION['user']['username'] ?>!
+                    <li><a href="/logout"><strong>Logout</strong></a></li>
+                <?php else: ?>
+                    <li><a href="/login"><strong>Login</strong></a></li>
+                    <li><a href="/register"><button>Register</button></a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
-    <main class="container">
+    <main>

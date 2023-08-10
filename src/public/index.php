@@ -1,23 +1,45 @@
 <?php
 declare(strict_types=1);
 
+session_start();
+
+require_once 'controllers/ProductController.php';
+require_once 'controllers/AuthController.php';
+
 try {
-    // 1 - Connexion à la DB
-    $pdo = new PDO(
-        'mysql:host=' . getenv('DB_HOST') . ';dbname=' . getenv('DB_DATABASE'),
-        getenv('DB_USERNAME'),
-        getenv('DB_PASSWORD')
-    );
+    $url_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/");
+    $method = $_SERVER['REQUEST_METHOD']; // GET -- POST
 
-    // 2 - Requête SQL pour récupérer la liste des produits
-    $stmt = $pdo->query("SELECT * FROM products LIMIT 20");
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($url_path === "" || $url_path === "index.php") {
+        $productController = new ProductController();
+        $productController->index();
+    }
 
-    // 3 - Affichage de la liste des produits
-    include 'public/views/layout/header.view.php';
-    include 'public/views/index.view.php';
-    include 'public/views/layout/footer.view.php';
+    if ($url_path === "product") {
+        $productController = new ProductController();
+        $productController->show($_GET['productCode']);
+    }
+
+    if ($url_path === "product/create") {
+        $productController = new ProductController();
+    }
+
+    if ($url_path === "login") {
+        $authController = new AuthController();
+        if ($method === "GET") $authController->showLoginForm();
+        if ($method === "POST") $authController->login($_POST['username'], $_POST['password']);
+    }
+
+    if ($url_path === "logout") {
+        $authController = new AuthController();
+        $authController->logout();
+    }
+
+    if ($url_path === "register") {
+        $authController = new AuthController();
+        if ($method === "GET") $authController->showRegistrationForm();
+        if ($method === "POST") $authController->register($_POST['username'],$_POST['email'], $_POST['password']);
+    }
 } catch (Exception $e) {
-    print_r($e->getMessage());
+    echo $e->getMessage();
 }
-?>

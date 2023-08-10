@@ -21,7 +21,7 @@ if (empty($_POST)) {
         // 3 - Vérification des données
             // 3.1 - Pas vides ?
         if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password'])) {
-            throw new Exception('Formulaire non complet');
+            throw new Exception('Incomplete form');
         }
 
             // 3.2 - Pas d'injection SQL ?
