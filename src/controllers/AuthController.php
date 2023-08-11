@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-require_once 'db/Database.php';
+namespace Controllers;
+
+use Exception;
+use Models\Database;
 
 class AuthController
 {
@@ -14,7 +17,7 @@ class AuthController
 
     public function register(string $usernameInput, string $emailInput, string $passwordInput)
     {
-        if (empty($usernameInput) || empty($email) || empty($passwordInput)) {
+        if (empty($usernameInput) || empty($emailInput) || empty($passwordInput)) {
             throw new Exception('Incomplete form');
         }
 

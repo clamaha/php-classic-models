@@ -1,7 +1,12 @@
 <?php
 declare(strict_types=1);
 
-require_once 'db/Database.php';
+namespace Controllers;
+
+use Exception;
+use Models\Database;
+use Models\Product;
+use PDO;
 
 class ProductController
 {
@@ -15,11 +20,7 @@ class ProductController
     public function index()
     {
         try {
-            // 2 - Requête SQL pour récupérer la liste des produits
-            $stmt = $this->db->query(
-                "SELECT * FROM products LIMIT 20"
-            );
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $products = (new Product())->findAll(20);
 
             // 3 - Affichage de la liste des produits
             include 'views/layout/header.view.php';
@@ -33,14 +34,10 @@ class ProductController
     public function show(string $productCode)
     {
         try {
-            $stmt = $this->db->query(
-                "SELECT * FROM products WHERE productCode = ?",
-                [$productCode]
-            );
-            $product = $stmt->fetch(PDO::FETCH_ASSOC);
+            $product = (new Product())->find($productCode);
 
             if (empty($product)) {
-                echo '404 - no product found';
+                (new PageController())->page_404();
                 die;
             }
 
